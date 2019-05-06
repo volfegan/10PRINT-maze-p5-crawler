@@ -22,14 +22,13 @@ maze10PRINT = function(p) {
     p.colour;
     
     function generateColour() {
-        //colour hues for HSL system: 180 (cyan) to 290 (violet)
-        for (colour = 180; colour < 290; colour += (110 / p.floor(p.windowWidth / p.symbolSize))) {
+        //colour hues for HSL system: 180 (cyan) to 290 (violet) // 50(dark orange) to 160 (Aquamarine)
+        for (colour = 180; colour < 290; colour += (110 / (p.floor(p.windowWidth / p.symbolSize) ))  ) {
             p.mazeColour.push('hsl('+ p.floor(colour) +', 50%, 50%)');
-            console.log(p.mazeColour.length);
         }
     }
     function resetMaze() {
-        p.CHR$list = [];
+        //p.CHR$list = []; //hard reset, erase previous maze
         p.CHR$index = 0;
         p.mazecrawl = false;
         p.topCrawl = null;
@@ -90,8 +89,8 @@ maze10PRINT = function(p) {
                 
                 }
                 //crawling inside the maze
-                //1. previous CHAR1, visitedUP, positioned on left of current CHAR1
-                if (p.mazepath[0].CHAR1 == true && p.mazepath[0].visitedUP == true && p.mazepath[0].x < p.CHR$list[i].x) {
+                //1. previous CHAR1, visitedUP, positioned on left of current not visited CHAR1
+                if (p.mazepath[0].CHAR1 == true && p.CHR$list[i].visitedDW == false &&p.mazepath[0].visitedUP == true && p.mazepath[0].x < p.CHR$list[i].x) {
                     p.CHR$list[i].visitedDW = true;
                     p.CHR$list[i].colourDW = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -106,8 +105,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("1. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //2. previous CHAR1, visitedUP, positioned bellow current CHAR1
-                if (p.mazepath[0].CHAR1 == true && p.mazepath[0].visitedUP == true && p.mazepath[0].y > p.CHR$list[i].y) {
+                //2. previous CHAR1, visitedUP, positioned bellow current not visited CHAR1
+                if (p.mazepath[0].CHAR1 == true && p.CHR$list[i].visitedDW == false && p.mazepath[0].visitedUP == true && p.mazepath[0].y > p.CHR$list[i].y) {
                     p.CHR$list[i].visitedDW = true;
                     p.CHR$list[i].colourDW = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -122,8 +121,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("2. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //3. previous CHAR1, visitedDW, positioned above current CHAR1
-                if (p.mazepath[0].CHAR1 == true && p.mazepath[0].visitedDW == true && p.mazepath[0].y < p.CHR$list[i].y) {
+                //3. previous CHAR1, visitedDW, positioned above current not visited CHAR1
+                if (p.mazepath[0].CHAR1 == true && p.CHR$list[i].visitedUP == false && p.mazepath[0].visitedDW == true && p.mazepath[0].y < p.CHR$list[i].y) {
                     p.CHR$list[i].visitedUP = true;
                     p.CHR$list[i].colourUP = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -138,8 +137,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("3. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //4. previous CHAR1, visitedDW, positioned right of current CHAR1
-                if (p.mazepath[0].CHAR1 == true && p.mazepath[0].visitedDW == true && p.mazepath[0].x > p.CHR$list[i].x) {
+                //4. previous CHAR1, visitedDW, positioned right of current not visited CHAR1
+                if (p.mazepath[0].CHAR1 == true && p.CHR$list[i].visitedUP == false && p.mazepath[0].visitedDW == true && p.mazepath[0].x > p.CHR$list[i].x) {
                     p.CHR$list[i].visitedUP = true;
                     p.CHR$list[i].colourUP = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -155,8 +154,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("4. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //5. previous CHAR2, visitedUP, positioned right of current CHAR1
-                if (p.mazepath[0].CHAR2 == true && p.mazepath[0].visitedUP == true && p.mazepath[0].x > p.CHR$list[i].x) {
+                //5. previous CHAR2, visitedUP, positioned right of current not visited CHAR1
+                if (p.mazepath[0].CHAR2 == true && p.CHR$list[i].visitedUP == false && p.mazepath[0].visitedUP == true && p.mazepath[0].x > p.CHR$list[i].x) {
                     p.CHR$list[i].visitedUP = true;
                     p.CHR$list[i].colourUP = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -172,8 +171,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("5. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //6. previous CHAR2, visitedUP, positioned bellow current CHAR1
-                if (p.mazepath[0].CHAR2 == true && p.mazepath[0].visitedUP == true && p.mazepath[0].y > p.CHR$list[i].y) {
+                //6. previous CHAR2, visitedUP, positioned bellow current not visited CHAR1
+                if (p.mazepath[0].CHAR2 == true && p.CHR$list[i].visitedDW == false && p.mazepath[0].visitedUP == true && p.mazepath[0].y > p.CHR$list[i].y) {
                     p.CHR$list[i].visitedDW = true;
                     p.CHR$list[i].colourDW = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -189,8 +188,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("6. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //7. previous CHAR2, visitedDW, positioned above current CHAR1
-                if (p.mazepath[0].CHAR2 == true && p.mazepath[0].visitedDW == true && p.mazepath[0].y < p.CHR$list[i].y) {
+                //7. previous CHAR2, visitedDW, positioned above current not visited CHAR1
+                if (p.mazepath[0].CHAR2 == true && p.CHR$list[i].visitedUP == false && p.mazepath[0].visitedDW == true && p.mazepath[0].y < p.CHR$list[i].y) {
                     p.CHR$list[i].visitedUP = true;
                     p.CHR$list[i].colourUP = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -206,8 +205,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("6. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //8. previous CHAR2, visitedDW, positioned left of current CHAR1
-                if (p.mazepath[0].CHAR2 == true && p.mazepath[0].visitedDW == true && p.mazepath[0].x < p.CHR$list[i].x) {
+                //8. previous CHAR2, visitedDW, positioned left of current not visited CHAR1
+                if (p.mazepath[0].CHAR2 == true && p.CHR$list[i].visitedDW == false && p.mazepath[0].visitedDW == true && p.mazepath[0].x < p.CHR$list[i].x) {
                     p.CHR$list[i].visitedDW = true;
                     p.CHR$list[i].colourDW = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -247,8 +246,8 @@ maze10PRINT = function(p) {
                     //console.log("0. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
                 //crawling inside the maze
-                //1. previous CHAR1, visitedUP, positioned on left of current CHAR2
-                if (p.mazepath[0].CHAR1 == true && p.mazepath[0].visitedUP == true && p.mazepath[0].x < p.CHR$list[i].x) {
+                //1. previous CHAR1, visitedUP, positioned on left of current not visited CHAR2
+                if (p.mazepath[0].CHAR1 == true && p.CHR$list[i].visitedUP == false && p.mazepath[0].visitedUP == true && p.mazepath[0].x < p.CHR$list[i].x) {
                     p.CHR$list[i].visitedUP = true;
                     p.CHR$list[i].colourUP = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -263,8 +262,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("1. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //2. previous CHAR1, visitedUP, positioned bellow current CHAR2
-                if (p.mazepath[0].CHAR1 == true && p.mazepath[0].visitedUP == true && p.mazepath[0].y > p.CHR$list[i].y) {
+                //2. previous CHAR1, visitedUP, positioned bellow current not visited CHAR2
+                if (p.mazepath[0].CHAR1 == true && p.CHR$list[i].visitedDW == false && p.mazepath[0].visitedUP == true && p.mazepath[0].y > p.CHR$list[i].y) {
                     p.CHR$list[i].visitedDW = true;
                     p.CHR$list[i].colourDW = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -279,8 +278,8 @@ maze10PRINT = function(p) {
                     }
                    //console.log("2. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //3. previous CHAR1, visitedDW, positioned above current CHAR2
-                if (p.mazepath[0].CHAR1 == true && p.mazepath[0].visitedDW == true && p.mazepath[0].y < p.CHR$list[i].y) {
+                //3. previous CHAR1, visitedDW, positioned above current not visited CHAR2
+                if (p.mazepath[0].CHAR1 == true && p.CHR$list[i].visitedUP == false && p.mazepath[0].visitedDW == true && p.mazepath[0].y < p.CHR$list[i].y) {
                     p.CHR$list[i].visitedUP = true;
                     p.CHR$list[i].colourUP = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -295,8 +294,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("3. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //4. previous CHAR1, visitedDW, positioned on right of current CHAR2
-                if (p.mazepath[0].CHAR1 == true && p.mazepath[0].visitedDW == true && p.mazepath[0].x > p.CHR$list[i].x) {
+                //4. previous CHAR1, visitedDW, positioned on right of current not visited CHAR2
+                if (p.mazepath[0].CHAR1 == true && p.CHR$list[i].visitedDW == false && p.mazepath[0].visitedDW == true && p.mazepath[0].x > p.CHR$list[i].x) {
                     p.CHR$list[i].visitedDW = true;
                     p.CHR$list[i].colourDW = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -311,8 +310,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("4. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //5. previous CHAR2, visitedUP, positioned on right of current CHAR2
-                if (p.mazepath[0].CHAR2 == true && p.mazepath[0].visitedUP == true && p.mazepath[0].x > p.CHR$list[i].x) {
+                //5. previous CHAR2, visitedUP, positioned on right of current not visited CHAR2
+                if (p.mazepath[0].CHAR2 == true && p.CHR$list[i].visitedDW == false && p.mazepath[0].visitedUP == true && p.mazepath[0].x > p.CHR$list[i].x) {
                     p.CHR$list[i].visitedDW = true;
                     p.CHR$list[i].colourDW = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -327,8 +326,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("5. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //6. previous CHAR2, visitedUP, positioned bellow current CHAR2
-                if (p.mazepath[0].CHAR2 == true && p.mazepath[0].visitedUP == true && p.mazepath[0].y > p.CHR$list[i].y) {
+                //6. previous CHAR2, visitedUP, positioned bellow current not visited CHAR2
+                if (p.mazepath[0].CHAR2 == true && p.CHR$list[i].visitedDW == false && p.mazepath[0].visitedUP == true && p.mazepath[0].y > p.CHR$list[i].y) {
                     p.CHR$list[i].visitedDW = true;
                     p.CHR$list[i].colourDW = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -343,8 +342,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("6. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //7. previous CHAR2, visitedDW, positioned above current CHAR2
-                if (p.mazepath[0].CHAR2 == true && p.mazepath[0].visitedDW == true && p.mazepath[0].y < p.CHR$list[i].y) {
+                //7. previous CHAR2, visitedDW, positioned above current not visited CHAR2
+                if (p.mazepath[0].CHAR2 == true && p.CHR$list[i].visitedUP == false && p.mazepath[0].visitedDW == true && p.mazepath[0].y < p.CHR$list[i].y) {
                     p.CHR$list[i].visitedUP = true;
                     p.CHR$list[i].colourUP = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -359,8 +358,8 @@ maze10PRINT = function(p) {
                     }
                     //console.log("7. ", p.CHR$list[i], p.x, p.y, nextPos);
                 }
-                //8. previous CHAR2, visitedDW, positioned on left of current CHAR2
-                if (p.mazepath[0].CHAR2 == true && p.mazepath[0].visitedDW == true && p.mazepath[0].x < p.CHR$list[i].x) {
+                //8. previous CHAR2, visitedDW, positioned on left of current not visited CHAR2
+                if (p.mazepath[0].CHAR2 == true && p.CHR$list[i].visitedUP == false && p.mazepath[0].visitedDW == true && p.mazepath[0].x < p.CHR$list[i].x) {
                     p.CHR$list[i].visitedUP = true;
                     p.CHR$list[i].colourUP = p.colour;
                     p.mazepath.unshift(p.CHR$list[i]);
@@ -403,14 +402,12 @@ maze10PRINT = function(p) {
             if (this.visitedUP) {
                 p.noStroke();
                 //p.fill(0, 180, 255, 100);
-                //p.fill('hsl(200, 100%, 50%)');
                 p.fill(this.colourUP);
                 p.triangle(this.x, this.y, this.x + p.symbolSize, this.y, this.x + p.symbolSize, this.y + p.symbolSize);
             }
             if (this.visitedDW) {
                 p.noStroke();
                 //p.fill(0, 180, 255, 100);
-                //p.fill('hsl(200, 100%, 50%)');
                 p.fill(this.colourDW);
                 p.triangle(this.x, this.y, this.x + p.symbolSize, this.y + p.symbolSize, this.x, this.y + p.symbolSize);
             }
@@ -521,6 +518,7 @@ maze10PRINT = function(p) {
     }
     
     p.windowResized = function() {
+        p.CHR$list = [];
         resetMaze();
         p.resizeCanvas(p.windowWidth -32, p.windowHeight - 60);
     }
